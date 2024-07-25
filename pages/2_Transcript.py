@@ -8,6 +8,8 @@ client = setup()
 
 write_chat_history()
 
+
+# Text chat logic.
 if prompt := st.chat_input("Ask the supervisor questions"):
     st.session_state.chat_history.append({"role": "user", "content": prompt})
     
