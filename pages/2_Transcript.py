@@ -1,6 +1,6 @@
 import streamlit as st
 from openai import OpenAI
-from voice_chatbot.Voice_Chat import setup, write_chat_history
+from Voice_Chat import setup, write_chat_history
 
 st.title("Written Chat Transcript")
 
