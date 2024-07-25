@@ -5,6 +5,7 @@ from pathlib import Path
 import io
 
 st.title("Voice Chat")
+st.write("Please press 'Start' to begin recording a voice prompt. Press 'Stop' when finished to get a vocal response from the chatbot.")
 
 def setup():
     # Set up OpenAI API client
