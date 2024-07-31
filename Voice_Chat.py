@@ -5,6 +5,10 @@ from pathlib import Path
 import io
 
 st.title("Voice Chat")
+voice_selection = st.radio("Please select a voice for the chatbot: ",
+                           index=0,
+                           options=["Alloy", "Echo", "Fable", "Onyx", "Nova", "Shimmer"],
+                           horizontal=True)
 st.write("Please press 'Start' to begin recording a voice prompt. Press 'Stop' when finished to get a vocal response from the chatbot.")
 
 def setup():
@@ -22,6 +26,9 @@ def setup():
     # Initialise chat history
     if "chat_history" not in st.session_state:
         st.session_state["chat_history"] = []
+
+    if "system_prompt" not in st.session_state:
+        st.session_state["system_prompt"] = "Please keep your responses brief if possible, as though you were having a spoken conversation."
 
     return client
 
@@ -92,13 +99,13 @@ def chat_logic():
 
     if transcription:
         st.session_state.chat_history.append({"role": "user", "content": transcription})
-        messages = [{"role": m["role"], "content": m["content"]} for m in st.session_state.chat_history]
+        messages = [{"role": "system", "content": st.session_state["system_prompt"]}] + [{"role": m["role"], "content": m["content"]} for m in st.session_state.chat_history]
         
         # Get response to prompt
         response = get_response(messages)
         st.session_state.chat_history.append({"role": "assistant", "content": response})
 
-        speak(response, "alloy")
+        speak(response, voice_selection.lower())
         audio_file = open("audio.mp3", 'rb')
         audio_bytes = audio_file.read()
         st.audio(audio_bytes, format='audio/mpeg', autoplay=True)

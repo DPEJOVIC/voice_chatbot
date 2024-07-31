@@ -17,7 +17,7 @@ if prompt := st.chat_input("Type a message here"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        messages = [{"role": m["role"], "content": m["content"]} for m in st.session_state.chat_history]
+        messages = [{"role": "system", "content": st.session_state["system_prompt"]}] + [{"role": m["role"], "content": m["content"]} for m in st.session_state.chat_history]
 
         stream = client.chat.completions.create(
             model = st.session_state["openai_model"],
