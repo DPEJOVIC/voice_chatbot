@@ -10,7 +10,7 @@ write_chat_history()
 
 
 # Text chat logic.
-if prompt := st.chat_input("Ask the supervisor questions"):
+if prompt := st.chat_input("Type a message here"):
     st.session_state.chat_history.append({"role": "user", "content": prompt})
     
     with st.chat_message("user"):
